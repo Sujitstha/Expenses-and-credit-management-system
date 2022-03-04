@@ -19,9 +19,11 @@ class CashFlowController extends Controller
 
 
     //Expansive List
-    public function expensive()
+    public function expense()
     {
         $income = Transaction::where('category_id',2)->where('user_id',Auth::user()->id)->get();
         return CashFlowResource::collection($income);
     }
+
+
 }

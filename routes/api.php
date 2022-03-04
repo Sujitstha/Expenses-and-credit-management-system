@@ -32,5 +32,5 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::apiResource('transaction',TransactionController::class);
     Route::apiResource('todo',TodoController::class);
     Route::get('/income',[CashFlowController::class,'income']);
-    Route::get('/expensive',[CashFlowController::class,'expensive']);
+    Route::get('/expense',[CashFlowController::class,'expense']);
 });

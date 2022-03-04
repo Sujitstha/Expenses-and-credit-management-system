@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\TransactionResource;
 use App\Models\Api\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,7 +17,8 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        //
+        $recentTransaction = Transaction::orderBy('id','desc')->where('user_id',Auth::user()->id)->limit(5)->get();
+        return TransactionResource::collection($recentTransaction);
     }
 
     /**
