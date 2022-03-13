@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\TodoResource;
-use App\Models\Api\Todo;
+use App\Models\Api\Credit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 
-class TodoController extends Controller
+class LoanController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +17,9 @@ class TodoController extends Controller
      */
     public function index()
     {
-        $todos = Todo::orderBy('id','desc')->where('user_id',Auth::user()->id)->get();
-        return TodoResource::collection($todos);
+        $loans = Credit::orderBy('id','desc')->where('user_id',Auth::user()->id)->get();
+        return response()->json($loans);
+
     }
 
     /**
@@ -29,11 +30,23 @@ class TodoController extends Controller
      */
     public function store(Request $request)
     {
-        $todo = new Todo();
-        $todo->task = $request->task;
-        $todo->user_id = Auth::user()->id;
-        $todo->save();
-        return response()->json(['message' =>'Record Saved Successfully']);
+        $loan = new Credit();
+        $loan->name = $request->name;
+        $loan->address = $request->address;
+        $loan->mobile = $request->mobile;
+        $loan->purpose = $request->purpose;
+        $loan->amount = $request->amount;
+        $loan->due_date = $request->due_date;
+        $loan->remarks = $request->remarks;
+        $loan->user_id = Auth::user()->id;
+        $loan->save();
+        $response = Http::post('http://sms.codeitapps.com/api/v3/sms?',[
+            'token' => 'API TOKEN',
+            'to' => $request->mobile,
+            'sender' => 'CodeIT',
+            'message' => "Dear {$request->name}\n you have due of Rs. {$request->amount}\n purpose: {$request->purpose}\n Thank you."
+        ]);
+        return response()->json(['message','Record Saved Successfully']);
     }
 
     /**
@@ -56,11 +69,7 @@ class TodoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $todo =  Todo::find($id);
-        $todo->task = $request->task;
-        $todo->user_id = Auth::user()->id;
-        $todo->update();
-        return response()->json(['message'=>'Record Updated Successfully']);
+        //
     }
 
     /**
@@ -71,10 +80,6 @@ class TodoController extends Controller
      */
     public function destroy($id)
     {
-        $todo = Todo::find($id);
-        $todo->delete();
-        return response()->json([
-            'message' => 'Record Deleted Successfully'
-        ]);
+        //
     }
 }

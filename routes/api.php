@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CashFlowController;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\LoanController;
 use App\Http\Controllers\Api\TodoController;
 use App\Http\Controllers\Api\TransactionController;
 use Illuminate\Http\Request;
@@ -30,6 +31,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::post('/logout',[AuthController::class,'logout']);
     Route::apiResource('categories',CategoryController::class);
     Route::apiResource('transaction',TransactionController::class);
+    Route::apiResource('loan',LoanController::class);
     Route::apiResource('todo',TodoController::class);
     Route::get('/income',[CashFlowController::class,'income']);
     Route::get('/expense',[CashFlowController::class,'expense']);
