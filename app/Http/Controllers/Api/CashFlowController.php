@@ -25,5 +25,19 @@ class CashFlowController extends Controller
         return CashFlowResource::collection($income);
     }
 
+    public function totalIncome()
+    {
+        $totalIncome = Transaction::where('category_id',1)->where('user_id',Auth::user()->id)->sum('amount');
+        return response()->json(['totalIncome' => $totalIncome]);
+
+    }
+
+    public function totalExpenses()
+    {
+        $totalExpanses = Transaction::where('category_id',2)->where('user_id',Auth::user()->id)->sum('amount');
+        return response()->json(['totalExpenses' => $totalExpanses]);
+
+    }
+
 
 }

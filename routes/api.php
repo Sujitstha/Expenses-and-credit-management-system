@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CashFlowController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\LoanController;
+use App\Http\Controllers\Api\ReportController;
 use App\Http\Controllers\Api\TodoController;
 use App\Http\Controllers\Api\TransactionController;
 use Illuminate\Http\Request;
@@ -35,4 +36,6 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::apiResource('todo',TodoController::class);
     Route::get('/income',[CashFlowController::class,'income']);
     Route::get('/expense',[CashFlowController::class,'expense']);
+    Route::get('/totalIncome',[CashFlowController::class,'totalIncome']);
+    Route::get('/totalExpanses',[CashFlowController::class,'totalExpenses']);
 });
