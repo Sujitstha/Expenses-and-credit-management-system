@@ -69,7 +69,23 @@ class LoanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $loan =  Credit::find($id);
+        $loan->name = $request->name;
+        $loan->address = $request->address;
+        $loan->mobile = $request->mobile;
+        $loan->purpose = $request->purpose;
+        $loan->amount = $request->amount;
+        $loan->due_date = $request->due_date;
+        $loan->remarks = $request->remarks;
+        $loan->user_id = Auth::user()->id;
+        $loan->update();
+        // $response = Http::post('http://sms.codeitapps.com/api/v3/sms?',[
+        //     'token' => 'w6ZlvtLHCfZaqPWY1605I3XDo0U7MLUzEmu1',
+        //     'to' => $request->mobile,
+        //     'sender' => 'CodeIT',
+        //     'message' => "Dear {$request->name}\n you have due of Rs. {$request->amount}\n purpose: {$request->purpose}\n Thank you."
+        // ]);
+        return response()->json(['message','Record Updated Successfully']);
     }
 
     /**
@@ -80,6 +96,8 @@ class LoanController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $credit = Credit::find($id);
+        $credit->delete();
+        return response()->json(['message'=>'Record Deleted Successfully']);
     }
 }
