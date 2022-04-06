@@ -62,7 +62,17 @@ class TransactionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $transaction = Transaction::find($id);
+        $transaction->date = $request->date;
+        $transaction->category_id = $request->category_id;
+        $transaction->sub_category_id = $request->sub_category_id;
+        $transaction->amount = $request->amount;
+        $transaction->user_id = Auth::user()->id;
+        $transaction->remarks = $request->remarks;
+        $transaction->update();
+        return response()->json([
+            'message' => 'Record Updated Successfully'
+        ]);
     }
 
     /**
@@ -73,6 +83,8 @@ class TransactionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $transaction = Transaction::find($id);
+        $transaction->delete();
+        return response()->json(['message'=>'Transaction Deleted']);
     }
 }
