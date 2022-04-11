@@ -1,9 +1,12 @@
 <?php
 
+use App\Http\Controllers\Api\AboutController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CashFlowController;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\ConditionController;
 use App\Http\Controllers\Api\LoanController;
+use App\Http\Controllers\Api\PrivacyController;
 use App\Http\Controllers\Api\ReportController;
 use App\Http\Controllers\Api\TodoController;
 use App\Http\Controllers\Api\TransactionController;
@@ -27,6 +30,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/register',[AuthController::class,'register']);
 Route::post('/login',[AuthController::class,'login']);
+Route::apiResource('privacy',PrivacyController::class);
+Route::apiResource('condition',ConditionController::class);
+Route::apiResource('about',AboutController::class);
 
 Route::middleware(['auth:sanctum'])->group(function(){
     Route::post('/logout',[AuthController::class,'logout']);
