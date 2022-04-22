@@ -33,6 +33,8 @@ Route::post('/login',[AuthController::class,'login']);
 Route::apiResource('privacy',PrivacyController::class);
 Route::apiResource('condition',ConditionController::class);
 Route::apiResource('about',AboutController::class);
+Route::get('/forgot-password/{email}',[AuthController::class,'forgotPassword']);
+
 
 Route::middleware(['auth:sanctum'])->group(function(){
     Route::post('/logout',[AuthController::class,'logout']);
