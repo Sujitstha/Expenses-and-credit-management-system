@@ -41,9 +41,9 @@ class LoanController extends Controller
         $loan->user_id = Auth::user()->id;
         $loan->save();
         $response = Http::post('http://sms.codeitapps.com/api/v3/sms?',[
-            'token' => 'w6ZlvtLHCfZaqPWY1605I3XDo0U7MLUzEmu1',
+            'token' => 's3Xs93M1KgsjARbH1611QG8zKSitQjY4k7gz',
             'to' => $request->mobile,
-            'sender' => 'CodeIT',
+            'sender' => 'Demo',
             'message' => "Dear {$request->name}\n you have due of Rs. {$request->amount}\n purpose: {$request->purpose}\n Thank you."
         ]);
         return response()->json(['message','Record Saved Successfully']);
