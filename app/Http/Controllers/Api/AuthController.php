@@ -21,9 +21,10 @@ class AuthController extends Controller
         $user = User::where('email',$email)->first();
         $user->password = Hash::make($password);
         $user->update();
+
         $response = Http::post('http://sms.codeitapps.com/api/v3/sms?',[
             'token' => 's3Xs93M1KgsjARbH1611QG8zKSitQjY4k7gz',
-            'to' => $user->phone,
+            'to' => $user->mobile,
             'sender' => 'Demo',
             'message' => "Dear " .$user->name . "\nYour New passowrd is $password\n\nExpenses Management"
         ]);
