@@ -20,6 +20,7 @@ class AuthController extends Controller
         $password = str_shuffle($pin);
         $user = User::where('email',$email)->first();
         $user->password = Hash::make($password);
+
         $user->update();
 
         $response = Http::post('http://sms.codeitapps.com/api/v3/sms?',[
